@@ -3,9 +3,10 @@ import './App.css';
 import ChoiceButton from './ChoiceButton'; 
 import GameResult from './GameResult'; 
 import RulesModal from "./RulesModal";
-const choices = ["rock", "paper", "scissors", "lizard", "spock"];
 import { useEffect } from "react";
 
+
+const choices = ["rock", "paper", "scissors", "lizard", "spock"];
 class RockPaperScissorsGame {
   round = 1;
   playerScore = 0;
@@ -54,14 +55,24 @@ class RockPaperScissorsGame {
     this.computerScore = 0;
     this.result = "";
   }
+
+  getOverallWinner() {
+    if (this.playerScore > this.computerScore) {
+      return 'You';
+    } else if (this.computerScore > this.playerScore) {
+      return 'Computer';
+    } else {
+      return 'Tie';
+    }
+  }
 }
 
 function App() {
   const [choice, setChoice] = useState("");
   const [game, setGame] = useState(new RockPaperScissorsGame());
   const [isGameStarted, setIsGameStarted] = useState(false);
- 
   const [showRulesModal, setShowRulesModal] = useState(false);
+  const [overallWinner, setOverallWinner] = useState('');
 
   const toggleRulesModal = () => {
     setShowRulesModal((prev) => !prev);
@@ -95,6 +106,11 @@ function App() {
     updatedGame.playRound(choice);
     setGame(updatedGame);
     setChoice("");
+
+    if (updatedGame.isGameOver()) {
+      const winner = updatedGame.getOverallWinner();
+      setOverallWinner(winner);
+    }
   }
 
   function handleReset() {
@@ -102,6 +118,7 @@ function App() {
     setGame(updatedGame);
     setChoice("");
     setIsGameStarted(false);
+    setOverallWinner(''); 
   }
 
   
@@ -144,6 +161,7 @@ function App() {
             ) : (
               <div className="game-over">
                 <p>Game Over!</p>
+                {overallWinner && <p>Overall Winner: {overallWinner}</p>}
                 <button onClick={handleReset}>Play Again</button>
               </div>
               
@@ -162,3 +180,5 @@ function App() {
   );
 }
 export default App;
+
+
