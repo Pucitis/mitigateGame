@@ -108,6 +108,7 @@ function App() {
     setChoice("");
 
     if (updatedGame.isGameOver()) {
+     
       const winner = updatedGame.getOverallWinner();
       setOverallWinner(winner);
     }
@@ -155,9 +156,13 @@ function App() {
               computerScore={game.computerScore}
             />
             {!game.isGameOver() ? (
+             <div> 
               <button onClick={handleNext} disabled={choice === ""}>
                 Play
               </button>
+
+              <div><button onClick={handleReset}>Reset</button></div>
+              </div>
             ) : (
               <div className="game-over">
                 <p>Game Over!</p>
@@ -167,9 +172,6 @@ function App() {
               
             )}
           </div>
-            {isGameStarted && (
-              <div><button onClick={handleReset}>Reset</button></div>
-            )}
           <button className="rules-button" onClick={toggleRulesModal}>
             Rules
           </button>
