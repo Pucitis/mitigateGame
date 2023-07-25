@@ -1,5 +1,6 @@
 {
-  "name": "game-1",
+   "name": "mitigate-game",
+  "homepage": "http://pucitis.area.lv/mitigate",
   "private": true,
   "version": "0.0.0",
   "type": "module",
